@@ -1,0 +1,47 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    color : black;
+    font-family: 'Courier New', monospace;
+}
+
+#question{
+    font-size: 25px;
+}
+
+#mainImage{
+    height: 40vh;
+}
+
+p{
+    width: 80vw;
+    text-align: center;
+}
+
+#checkbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#buttons{
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    font-size: 20px;
+    font-family: 'Courier New', monospace;
+    color: black;
+    margin: 10px;
+}
+
+/* @media screen and (max-width: 600px){
+} */
