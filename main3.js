@@ -8,234 +8,237 @@ let mode = (btn, backgroundColor, fontColor) => {
         document.body.style.color = fontColor;
     })
 }
-
 mode(darkModeBtn, "black", "white")
 mode(lightModeBtn, "white", "black")
 
-
-/* クイズ内容 */
-
-let hamsterQuiz = [
+let quiz = [
+    //T/F
     {
         Q: "Which hamster is the biggest?",
-        A: ["Golden", true],
-        B: ["Roborovski", false],
-        C: ["Djungarian", false],
-        D: ["Djungarian", false]
+        Answers: [
+            ["Golden", true],
+            ["Roborovski", false],
+        ]
+    },
+    {
+        Q: "Which hamster is the biggest?",
+        Answers: [
+            ["Golden", true],
+            ["Roborovski", false],
+        ]
+    },
+    // Multipule
+    {
+        Q: "Which hamster is the biggest?",
+        Answers: [
+            ["Golden", true],
+            ["Roborovski", false],
+            ["Djungarian", false],
+            ["Djungarian", false]
+        ]
     },
     {
         Q: "How long is the lifespan of a hamster?",
-        A: ["7 days", false],
-        B: ["1-3 years", true],
-        C: ["5-10 years", false],
-        D: ["5-10 years", false]
+        Answers: [
+            ["7 days", false],
+            ["1-3 years", true],
+            ["5-10 years", false],
+            ["5-10 years", false]
+        ]
     },
     {
         Q: "How long do hamster front teeth grow per week?",
-        A: ["1-2 mm", true],
-        B: ["1-2 cm", false],
-        C: ["5 cm", false],
-        D: ["5 cm", false],
+        Answers: [
+            ["1-2 mm", true],
+            ["1-2 cm", false],
+            ["5 cm", false],
+            ["5 cm", false]
+        ]
     },
     {
         Q: "What color light are hamsters most sensitive to?",
-        A: ["Red", true],
-        B: ["Blue", false],
-        C: ["Green", false],
-        D: ["Blue", false],
+        Answers: [
+            ["Red", true],
+            ["Blue", false],
+            ["Green", false],
+            ["Blue", false]
+        ]
     },
     {
         Q: "During which time of day are hamsters most active?",
-        A: ["Morning", false],
-        B: ["Afternoon", false],
-        C: ["Night", true],
-        D: ["Night", true],
-    }
+        Answers: [
+            ["Morning", false],
+            ["Afternoon", false],
+            ["Night", true],
+            ["Night", true],
+        ]
+    },
+    // Check Box
+    {
+        Q: "Choose 2 options. \n \n Which duck is the largest?",
+        Answers: [
+            ["Mallard", false],
+            ["Pekin", true],
+            ["Muscovy", true],
+            ["Khaki Campbell", false]
+        ]
+    },
+    {
+        Q: "Choose 2 options. \n \n What color eggs do most ducks lay?",
+        Answers: [
+            ["White", true],
+            ["Brown", false],
+            ["Blue", false],
+            ["Green", true]
+        ]
+    },
+    {
+        Q: "Choose 2 options. \n \n In what environment do ducks prefer to live?",
+        Answers: [
+            ["Desert", false],
+            ["Forest", false],
+            ["Swamp", true],
+            ["Mountains", true]
+        ]
+    },
 ];
 
-/* 要素指定 */
+/*---------------　要素宣言　--------------------*/
 
 //　画像(img)
 let mainImage = document.querySelector("#mainImage")
-
-//　たね置き場(div)
-let seeds = document.querySelector("#seed")
-
+//　スコア置き場(div)
+let score = document.querySelector("#score")
 // 質問文表示(p)
 let question = document.querySelector("#question")
-
-//　回答ボタンたち３個(div, button)
-let quizBtnDiv = document.querySelector("#buttons")
-let quizBtns = document.querySelectorAll("[name='quiz']")
-let btn1 = document.querySelector("#btn1")
-let btn2 = document.querySelector("#btn2")
-let btn3 = document.querySelector("#btn3")
-let btn4 = document.querySelector("#btn4")
-
 // result
-let duckResult = document.querySelector("#duckResult");
-
-/* hamsterNextボタンの設定 */
-let hamsterResult = document.querySelector("#hamsterResult");
-let hamsterNext = document.querySelector("#hamsterNext")
-let sunflowerSeeds = 0;
-hamsterNext.addEventListener("click", () => {
-    //回答しないと次に進めないようNextボタンをオフ
-    hamsterNext.style.display = "none";
-    duckNext.style.display = "none";
-    duckResult.style.display = "none";
-
-    // クイズボタンボックスを表示
-    quizBtnDiv.style.display = "flex";
-
-    //ボタンたちをオンにし、背景色を戻す
-    mainImage.setAttribute('src', "./img/hamster/hamster1.jpeg")
-    quizBtns.forEach((btn) => {
-        btn.disabled = false;
-        btn.style.background = "lightgrey";
-    })
-
-    //Quiz Arrayの内容を引用してく
-    if (sunflowerSeeds < hamsterQuiz.length) {
-        hamsterNext.innerText = "Next";
-        question.innerText = hamsterQuiz[sunflowerSeeds].Q;
-
-        btn1.innerText = hamsterQuiz[sunflowerSeeds].A[0];
-        btn1.setAttribute('value', hamsterQuiz[sunflowerSeeds].A[1]);
-
-        btn2.innerText = hamsterQuiz[sunflowerSeeds].B[0];
-        btn2.setAttribute('value', hamsterQuiz[sunflowerSeeds].B[1]);
-
-        btn3.innerText = hamsterQuiz[sunflowerSeeds].C[0];
-        btn3.setAttribute('value', hamsterQuiz[sunflowerSeeds].C[1]);
-
-        btn4.innerText = hamsterQuiz[sunflowerSeeds].D[0];
-        btn4.setAttribute('value', hamsterQuiz[sunflowerSeeds].D[1]);
-
-        sunflowerSeeds++;
-    }
-    else { //Array内の質問完了
-        hamsterNext.style.display = "none";
-        duckNext.style.display = "flex";
-
-        // タネの数によって評価
-        if (seeds.childElementCount === 5) {
-            mainImage.setAttribute('src', "./img/hamster/happyHamster.jpeg")
-            hamsterResult.innerText = "Amazing!\n You answered all questions!\n Thank you hooman :)";
-        }
-        else if (seeds.childElementCount === 4) {
-            mainImage.setAttribute('src', "./img/hamster/happyHamster.jpeg")
-            hamsterResult.innerText = "Great!\n You got " + seeds.childElementCount + " seeds!\n Good job hooman :)";
-        }
-        else if (seeds.childElementCount >= 2) {
-            hamsterResult.innerText = "Nice!\n You got " + seeds.childElementCount + " seeds!\n Not bad hooman :)";
-        }
-        else if (seeds.childElementCount === 1) {
-            mainImage.setAttribute('src', "./img/hamster/sadHamster.jpeg")
-            hamsterResult.innerText = "Oh no.\n Only " + seeds.childElementCount + " seed.\n I am hungryyyy!";
-        }
-        else {
-            mainImage.setAttribute('src', "./img/hamster/sadHamster.jpeg")
-            hamsterResult.innerText = "What!? No seed?\n Where is my food hooman!?";
-        }
-    }
-})
-
-/* 回答ボタンの設定 */
-
-//　最初は回答ボタンをオフにしておく。（Start(Next)を押すとオン）
-quizBtns.forEach((btn) => {
-    btn.disabled = true;
-})
-
-// 最初はクイズボタンボックスを非表示に
-quizBtnDiv.style.display = "none";
-
-// 正解したら画像が変わってタネをもらえるよ
-quizBtns.forEach((btn) => {
-    btn.addEventListener("click", () => {
-        hamsterNext.style.display = "block";
-        //回答するとNextボタンが使える
-
-        if (btn.value == "true") {
-            // タネ増える
-            let aSeed = document.createElement("img");
-            aSeed.setAttribute('src', "./img/hamster/seed.jpeg");
-            aSeed.style.width = "70px";
-            seeds.append(aSeed);
-            // ハム喜ぶ
-            question.innerText = "Yay! Correct!";
-            mainImage.setAttribute('src', "./img/hamster/happyHamster.jpeg");
-
-        }
-        else {
-            question.innerText = "Ooops"
-            mainImage.setAttribute('src', "./img/hamster/sadHamster.jpeg")
-        }
-
-        // 正解がピンクで表示され、回答ボタンをオフに
-        quizBtns.forEach((btn) => {
-            btn.disabled = true;
-            if (btn.value == "true") {
-                btn.style.background = "lightblue";
-            }
-        })
-    })
-})
-
-/*------------ Duck Quiz ------------------*/
-
-let duckQuiz = [
-    {
-        Q: "Which duck is the largest?",
-        A: ["Mallard", false],
-        B: ["Pekin", true],
-        C: ["Muscovy", true],
-        D: ["Khaki Campbell", false]
-    },
-    {
-        Q: "What color eggs do most ducks lay?",
-        A: ["White", true],
-        B: ["Brown", false],
-        C: ["Blue", false],
-        D: ["Green", true]
-    },
-    {
-        Q: "In what environment do ducks prefer to live?",
-        A: ["Desert", false],
-        B: ["Forest", false],
-        C: ["Swamp", true],
-        D: ["Mountains", true]
-    }
-];
-
+let result = document.querySelector("#result");
+//　回答ボタンたち置き場
+let btnDiv = document.querySelector("#buttons")
+// 提出ボタン
 let checkboxSubmit = document.querySelector("#checkboxSubmit")
-let duckNext = document.querySelector("#duckNext")
+// 次へButton（大事）
+let next = document.querySelector("#next")
 
-//　checkboxたち4個(div, button)
-let checkboxDiv = document.querySelector("#checkbox")
-let checkBoxes = document.querySelectorAll("[name='checkbox']")
-let box1 = document.querySelector("#box1")
-let box2 = document.querySelector("#box2")
-let box3 = document.querySelector("#box3")
-let box4 = document.querySelector("#box4")
-let label1 = document.querySelector("#labelForBox1")
-let label2 = document.querySelector("#labelForBox2")
-let label3 = document.querySelector("#labelForBox3")
-let label4 = document.querySelector("#labelForBox4")
+/*---------------　Function　--------------------*/
 
-duckScore = 0;
+let addDuck = () => {
+    let aDuck = document.createElement("img");
+    aDuck.setAttribute('src', "./img/duck/scoreDuck.jpeg");
+    aDuck.style.width = "50px";
+    score.append(aDuck);
+}
+
+/*---------------　Nextボタンでクイズを引用　--------------------*/
+
+let quizIndex = 0;
+next.addEventListener("click", () => {
+    // クイズオープン
+    mainImage.setAttribute('src', "./img/duck/duck.jpeg")
+    next.style.display = "none";
+
+    //さっきのボタンを消す。
+    btnDiv.innerHTML = "";
+
+    //Check reset
+    let checked = document.querySelectorAll("[name='checkbox']:checked");
+    checked.forEach((box) => {
+        box.checked = false;
+    })
+    // //Labelの色をリセット
+    // labels.forEach((aLabel) => {
+    //     if (document.body.style.background == "black") {
+    //         aLabel.style.color = "white"
+    //     }
+    //     else {
+    //         aLabel.style.color = "black"
+    //     }
+    // })
+
+    //引用
+    if (quizIndex <= 6) {
+        btnDiv.style.display = "block";
+        question.innerText = quiz[quizIndex].Q;
+        
+        //引用
+        quiz[quizIndex].Answers.forEach((answer) => {
+            let answerBtn = document.createElement("button");
+            answerBtn.innerText = answer[0];
+            answerBtn.setAttribute('value', answer[1])
+            answerBtn.setAttribute('name', 'quiz')
+            btnDiv.append(answerBtn);
+
+            //回答
+            answerBtn.addEventListener("click", () => {
+                next.style.display = "block";
+                next.innerText = "Next";
+    
+                if (answerBtn.value == "true") {
+                    addDuck()
+                    answerBtn.style.background = "lightblue";
+                    question.innerText = "Yay! Correct!";
+                    mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg");
+                }
+                else {
+                    question.innerText = "Ooops"
+                    mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
+                }
+            })
+        })
+        quizIndex++;
+    }
+    else if (quizIndex < quiz.length) {
+    // Checkbox Open
+    checkboxSubmit.style.display = "block";
+    question.innerText = quiz[quizIndex].Q;
+    
+    //引用
+    quiz[quizIndex].Answers.forEach((answer) => {
+        let checkbox = document.createElement("input");
+        checkbox.setAttribute(`type`, `checkbox`);
+        checkbox.setAttribute(`id`, `${answer[0]}`);
+        checkbox.setAttribute(`value`, `${answer[1]}`);
+        let label = document.createElement("label");
+        label.innerText = answer[0];
+        label.setAttribute(`for`, `${answer[0]}`);
+        btnDiv.append(checkbox);
+        btnDiv.append(label);
+    })
+    quizIndex++;
+}
+
+else { //Array内の質問完了
+    next.style.display = "none";
+    btnDiv.style.display = "none";
+    question.style.display = "none";
+
+    // 評価
+    if (duckScore >= 4) {
+        mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
+        result.innerText = `Amazing!\n You found ${duckScore} ducks!`;
+    }
+    else if (duckScore >= 3) {
+        mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
+        result.innerText = `Nice!\n You found ${duckScore} ducks!`;
+    }
+    else {
+        mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
+        result.innerText = `${duckScore} ducks!?\n I need continue finding.`;
+    }
+}
+})
+
+/*---------------　チェックボックスの回答　--------------------*/
+
 checkboxSubmit.addEventListener("click", () => {
     checkedAnswer = [];
-    let checked = document.querySelectorAll("[name='checkbox']:checked");
+    let checked = document.querySelectorAll("[type='checkbox']:checked");
     checked.forEach((aChecked) => {
         checkedAnswer.push(aChecked.value);
     })
     let trueCount = checkedAnswer.filter((value) => {
         return value === "true";
     })
-    duckScore += trueCount.length;
-    console.log(duckScore)
 
     if (trueCount.length === 0) {
         mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
@@ -244,70 +247,24 @@ checkboxSubmit.addEventListener("click", () => {
     else if (trueCount.length === 1) {
         mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
         question.innerText = "Nice, You found a duck!"
+        addDuck()
     }
     else if (trueCount.length === 2) {
         mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
         question.innerText = "Wow, You found 2 ducks!"
+        addDuck()
+        addDuck()
     }
 
     // NextBtn on
-    duckNext.style.display = "flex";
-    duckNext.innerText = "Next";
+    next.style.display = "block";
+    next.innerText = "Next";
     checkboxSubmit.style.display = "none";
+
+    // //正しい回答を青文字に　nextElementSibling
+    // checkBoxes.forEach((box) => {
+    //     if (box.value === "true") {
+    //         box.nextElementSibling.style.color = "blue";
+    //     }
+    // })
 })
-
-let i = 0;
-duckNext.addEventListener("click", () => {
-    //Quiz Arrayの内容を引用してく
-    if (i < duckQuiz.length) {
-        checkboxSubmit.innerText = "Submit Answer";
-        question.innerText = duckQuiz[i].Q;
-
-        label1.innerText = duckQuiz[i].A[0];
-        box1.setAttribute('value', duckQuiz[i].A[1]);
-
-        label2.innerText = duckQuiz[i].B[0];
-        box2.setAttribute('value', duckQuiz[i].B[1]);
-
-        label3.innerText = duckQuiz[i].C[0];
-        box3.setAttribute('value', duckQuiz[i].C[1]);
-
-        label4.innerText = duckQuiz[i].D[0];
-        box4.setAttribute('value', duckQuiz[i].D[1]);
-
-        i++;
-
-        // クイズボタンボックスを表示
-        checkboxDiv.style.display = "flex";
-        checkboxSubmit.style.display = "flex";
-        duckNext.style.display = "none";
-        hamsterNext.style.display = "none";
-        mainImage.setAttribute('src', "./img/duck/duck.jpeg")
-    }
-    else { //Array内の質問完了
-        checkboxDiv.style.display = "none";
-        duckNext.style.display = "none";
-        checkboxSubmit.style.display = "none";
-        hamsterNext.style.display = "flex";
-
-        // 評価
-        if (duckScore >= 4) {
-            mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
-            duckResult.innerText = `Amazing!\n You found ${duckScore} ducks!`;
-        }
-        else if (duckScore >= 3) {
-            duckResult.innerText = `Nice!\n You found ${duckScore} ducks!`;
-        }
-        else {
-            mainImage.setAttribute('src', "./img/hamster/sadHamster.jpeg")
-            duckResult.innerText = `${duckScore} ducks!?\n I need continue finding.`;
-        }
-    }
-
-    //Check reset
-    let checked = document.querySelectorAll("[name='checkbox']:checked");
-    checked.forEach((box) => {
-        box.checked = false;
-    })
-})
-
