@@ -110,6 +110,7 @@ let box1 = document.querySelector("#box1")
 let box2 = document.querySelector("#box2")
 let box3 = document.querySelector("#box3")
 let box4 = document.querySelector("#box4")
+let labels = document.querySelectorAll("label")
 let label1 = document.querySelector("#labelForBox1")
 let label2 = document.querySelector("#labelForBox2")
 let label3 = document.querySelector("#labelForBox3")
@@ -142,6 +143,15 @@ next.addEventListener("click", () => {
     let checked = document.querySelectorAll("[name='checkbox']:checked");
     checked.forEach((box) => {
         box.checked = false;
+    })
+    //Labelの色をリセット
+    labels.forEach((aLabel)=>{
+        if(document.body.style.background == "black"){
+            aLabel.style.color = "white"
+        }
+        else{
+            aLabel.style.color = "black"
+        }
     })
 
     //クイズボタンたちをオンに
@@ -254,6 +264,13 @@ checkboxSubmit.addEventListener("click", () => {
     next.style.display = "block";
     next.innerText = "Next";
     checkboxSubmit.style.display = "none";
+
+    //正しい回答を青文字に　nextElementSibling
+    checkBoxes.forEach((box)=>{
+        if(box.value === "true"){
+            box.nextElementSibling.style.color = "blue";
+        }
+    })
 })
 
 /*---------------　ボタンタイプの回答　--------------------*/
@@ -282,6 +299,5 @@ quizBtns.forEach((btn) => {
             }
         })
         console.log(duckScore)
-
     })
 })
