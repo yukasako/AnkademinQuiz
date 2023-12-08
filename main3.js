@@ -1,7 +1,6 @@
 /* モード選択 */
 let darkModeBtn = document.querySelector("#darkMode");
 let lightModeBtn = document.querySelector("#lightMode");
-
 let mode = (btn, backgroundColor, fontColor) => {
     btn.addEventListener("click", () => {
         document.body.style.background = backgroundColor;
@@ -104,7 +103,6 @@ let quiz = [
 ];
 
 /*---------------　要素宣言　--------------------*/
-
 //　画像(img)
 let mainImage = document.querySelector("#mainImage")
 //　スコア置き場(div)
@@ -121,7 +119,6 @@ let checkboxSubmit = document.querySelector("#checkboxSubmit")
 let next = document.querySelector("#next")
 
 /*---------------　Function　--------------------*/
-
 let addDuck = () => {
     let aDuck = document.createElement("img");
     aDuck.setAttribute('src', "./img/duck/scoreDuck.jpeg");
@@ -134,102 +131,88 @@ let addDuck = () => {
 let quizIndex = 0;
 next.addEventListener("click", () => {
     // クイズオープン
-    mainImage.setAttribute('src', "./img/duck/duck.jpeg")
+    mainImage.setAttribute('src', "./img/duck/duck.jpeg");
     next.style.display = "none";
-
-    //さっきのボタンを消す。
+    //前回の引用内容を消す。
     btnDiv.innerHTML = "";
 
-    //Check reset
-    let checked = document.querySelectorAll("[name='checkbox']:checked");
-    checked.forEach((box) => {
-        box.checked = false;
-    })
-    // //Labelの色をリセット
-    // labels.forEach((aLabel) => {
-    //     if (document.body.style.background == "black") {
-    //         aLabel.style.color = "white"
-    //     }
-    //     else {
-    //         aLabel.style.color = "black"
-    //     }
-    // })
-
     //引用
-    if (quizIndex <= 6) {
+    if (quizIndex <= 6) { //Button type
         btnDiv.style.display = "block";
-        question.innerText = quiz[quizIndex].Q;
-        
         //引用
+        question.innerText = quiz[quizIndex].Q;
         quiz[quizIndex].Answers.forEach((answer) => {
             let answerBtn = document.createElement("button");
             answerBtn.innerText = answer[0];
-            answerBtn.setAttribute('value', answer[1])
-            answerBtn.setAttribute('name', 'quiz')
+            answerBtn.setAttribute('value', answer[1]);
+            answerBtn.setAttribute('name', 'quiz');
             btnDiv.append(answerBtn);
-
             //回答
             answerBtn.addEventListener("click", () => {
                 next.style.display = "block";
                 next.innerText = "Next";
-    
+
                 if (answerBtn.value == "true") {
-                    addDuck()
-                    answerBtn.style.background = "lightblue";
+                    addDuck();
                     question.innerText = "Yay! Correct!";
                     mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg");
                 }
                 else {
-                    question.innerText = "Ooops"
-                    mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
+                    question.innerText = "Ooops";
+                    mainImage.setAttribute('src', "./img/duck/noDuck.jpeg");
+                    answerBtn.style.backgroundColor = "lightpink";
                 }
+
+                // 正解ボタンの色付け
+                let answerBtns = document.querySelectorAll("[name='quiz']");
+                answerBtns.forEach((btn) => {
+                    if (btn.value == "true") {
+                        btn.style.backgroundColor = "lightblue";
+                    }
+                })
             })
         })
         quizIndex++;
     }
-    else if (quizIndex < quiz.length) {
-    // Checkbox Open
-    checkboxSubmit.style.display = "block";
-    question.innerText = quiz[quizIndex].Q;
-    
-    //引用
-    quiz[quizIndex].Answers.forEach((answer) => {
-        let checkbox = document.createElement("input");
-        checkbox.setAttribute(`type`, `checkbox`);
-        checkbox.setAttribute(`id`, `${answer[0]}`);
-        checkbox.setAttribute(`value`, `${answer[1]}`);
-        let label = document.createElement("label");
-        label.innerText = answer[0];
-        label.setAttribute(`for`, `${answer[0]}`);
-        btnDiv.append(checkbox);
-        btnDiv.append(label);
-    })
-    quizIndex++;
-}
-
-else { //Array内の質問完了
-    next.style.display = "none";
-    btnDiv.style.display = "none";
-    question.style.display = "none";
-
-    // 評価
-    if (duckScore >= 4) {
-        mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
-        result.innerText = `Amazing!\n You found ${duckScore} ducks!`;
+    else if (quizIndex < quiz.length) { //Checkbox type
+        // Checkbox Open
+        checkboxSubmit.style.display = "block";
+        //引用
+        question.innerText = quiz[quizIndex].Q;
+        quiz[quizIndex].Answers.forEach((answer) => {
+            let checkbox = document.createElement("input");
+            checkbox.setAttribute(`type`, `checkbox`);
+            checkbox.setAttribute(`id`, `${answer[0]}`);
+            checkbox.setAttribute(`value`, `${answer[1]}`);
+            let label = document.createElement("label");
+            label.innerText = answer[0];
+            label.setAttribute(`for`, `${answer[0]}`);
+            btnDiv.append(checkbox);
+            btnDiv.append(label);
+        })
+        quizIndex++;
     }
-    else if (duckScore >= 3) {
-        mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
-        result.innerText = `Nice!\n You found ${duckScore} ducks!`;
+    else { //Array内の質問完了
+        next.style.display = "none";
+        btnDiv.style.display = "none";
+        question.style.display = "none";
+        // 評価 Max 15
+        if (score.childElementCount >= 11) {
+            mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
+            result.innerText = `Amazing!\n You found ${score.childElementCount} ducks!`;
+        }
+        else if (score.childElementCount >= 8) {
+            mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
+            result.innerText = `Nice!\n You found ${score.childElementCount} ducks!`;
+        }
+        else {
+            mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
+            result.innerText = `${score.childElementCount} ducks!?\n I need continue finding.`;
+        }
     }
-    else {
-        mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
-        result.innerText = `${duckScore} ducks!?\n I need continue finding.`;
-    }
-}
 })
 
 /*---------------　チェックボックスの回答　--------------------*/
-
 checkboxSubmit.addEventListener("click", () => {
     checkedAnswer = [];
     let checked = document.querySelectorAll("[type='checkbox']:checked");
@@ -255,16 +238,15 @@ checkboxSubmit.addEventListener("click", () => {
         addDuck()
         addDuck()
     }
-
-    // NextBtn on
+    //正しい回答を青文字に　nextElementSibling
+    let checkBoxes = document.querySelectorAll("input");
+    checkBoxes.forEach((box) => {
+        if (box.value === "true") {
+            box.nextElementSibling.style.color = "blue";
+            box.nextElementSibling.style.backgroundColor = "lightyellow";
+        }
+    })
+    // NextBtn on, Submit off
     next.style.display = "block";
-    next.innerText = "Next";
     checkboxSubmit.style.display = "none";
-
-    // //正しい回答を青文字に　nextElementSibling
-    // checkBoxes.forEach((box) => {
-    //     if (box.value === "true") {
-    //         box.nextElementSibling.style.color = "blue";
-    //     }
-    // })
 })
