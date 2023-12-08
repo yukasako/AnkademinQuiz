@@ -125,13 +125,11 @@ next.addEventListener("click", () => {
     // クイズオープン
     mainImage.setAttribute('src', "./img/duck/duck.jpeg");
     next.style.display = "none";
-    //前回の引用内容を消す。
-    btnDiv.innerHTML = "";
+    btnDiv.innerHTML = "";    //前回の引用内容を消す。
 
-    //引用
-    if (quizIndex <= 6) { //Button type
+    if (quizIndex <= 6) { //★Button type
         btnDiv.style.display = "flex";
-        //引用
+        //★引用
         mainText.innerText = quiz[quizIndex].Q;
         quiz[quizIndex].Answers.forEach((answer) => {
             let answerBtn = document.createElement("button");
@@ -139,27 +137,25 @@ next.addEventListener("click", () => {
             answerBtn.setAttribute('value', answer[1]);
             answerBtn.setAttribute('name', 'quiz');
             btnDiv.append(answerBtn);
-            //回答
+            //★回答
             answerBtn.addEventListener("click", () => {
                 next.style.display = "block";
                 next.innerText = "Next";
-
-                if (answerBtn.value == "true") {
+                if (answerBtn.value === "true") {
                     addDuck();
                     mainText.innerText = "Yay! Correct!";
-                    mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg");
+                    mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg");
                 }
                 else {
                     mainText.innerText = "Ooops";
                     mainImage.setAttribute('src', "./img/duck/noDuck.jpeg");
                     answerBtn.style.textDecoration = "line-through";
                 }
-
                 // 正解ボタンの色付け
                 let answerBtns = document.querySelectorAll("[name='quiz']");
                 answerBtns.forEach((btn) => {
                     btn.disabled = true;
-                    if (btn.value == "true") {
+                    if (btn.value === "true") {
                         btn.style.backgroundColor = "lightblue";
                     }
                 })
@@ -167,27 +163,73 @@ next.addEventListener("click", () => {
         })
         quizIndex++;
     }
-    else if (quizIndex < quiz.length) { //Checkbox type
-        // Checkbox Open
-        checkboxSubmit.style.display = "block";
-        //引用
+    else if (quizIndex < quiz.length) { //★Checkbox type
+        //★引用
         mainText.innerText = quiz[quizIndex].Q;
         quiz[quizIndex].Answers.forEach((answer) => {
             let checkboxDiv = document.createElement("div")
             let checkbox = document.createElement("input");
-                checkbox.setAttribute(`type`, `checkbox`);
-                checkbox.setAttribute(`id`, `${answer[0]}`);
-                checkbox.setAttribute(`value`, `${answer[1]}`);
+            checkbox.setAttribute(`type`, `checkbox`);
+            checkbox.setAttribute(`id`, answer[0]);
+            checkbox.setAttribute(`value`, answer[1]);
             let label = document.createElement("label");
-                label.innerText = answer[0];
-                label.setAttribute(`for`, `${answer[0]}`);
+            label.innerText = answer[0];
+            label.setAttribute(`for`, answer[0]);
             checkboxDiv.append(checkbox);
             checkboxDiv.append(label);
             btnDiv.append(checkboxDiv);
         })
+        //チェックボックスの個数制限。ボックスがチェック（チェンジ）される度にチェック数（length）を取得しcheckMaxと比較。超えていたらチェックできなくする。
+        let checkMax = 2;
+        let checkBoxes = document.querySelectorAll("[type='checkbox']");
+        checkBoxes.forEach((aBox) => {
+            aBox.addEventListener(`change`, () => {
+                let checked = document.querySelectorAll("[type='checkbox']:checked")
+                if (checked.length > checkMax) {
+                    aBox.checked = false;
+                }
+            })
+        })
+        // ★チェックボックスSubmitで回答を提出。チェックしたもののValueがTrueだったらArrayに追加してその長さで判断。
+        checkboxSubmit.style.display = "block";
+        checkboxSubmit.addEventListener("click", () => {
+            let checkedTrue = [];
+            let checked = document.querySelectorAll("[type='checkbox']:checked");
+            checked.forEach((aChecked) => {
+                if (aChecked.value === "true") {
+                    checkedTrue.push(aChecked);
+                }
+            })    
+            if (checkedTrue.length === 0) {
+                mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
+                mainText.innerText = "Oh, No duck."
+            }
+            else if (checkedTrue.length === 1) {
+                mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
+                mainText.innerText = "Nice, You found a duck!"
+                addDuck()
+            }
+            else if (checkedTrue.length === 2) {
+                mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
+                mainText.innerText = "Wow, You found 2 ducks!"
+                addDuck()
+                addDuck()
+            }
+            //正しい回答を青文字に　nextElementSibling
+            let checkBoxes = document.querySelectorAll("input");
+            checkBoxes.forEach((box) => {
+                box.nextElementSibling.style.color = "lightgrey"
+                if (box.value === "true") {
+                    box.nextElementSibling.style.color = "blue";
+                }
+            })
+            // NextBtn on, Submit off
+            next.style.display = "block";
+            checkboxSubmit.style.display = "none";
+        })
         quizIndex++;
     }
-    else { //Array内の質問完了
+    else { //Result（Array内の質問完了）
         btnDiv.style.display = "none";
         next.style.display = "block"; //もう一回遊ぶ
         next.innerText = "Continue finding";
@@ -204,46 +246,7 @@ next.addEventListener("click", () => {
         }
         else {
             mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
-            mainText.innerText = `${score.childElementCount} ducks!?\n I need continue finding.`;
+            mainText.innerText = `Only ${score.childElementCount} ducks!?\n I need continue finding.`;
         }
     }
-})
-
-/*---------------　チェックボックスの回答　--------------------*/
-checkboxSubmit.addEventListener("click", () => {
-    checkedAnswer = [];
-    let checked = document.querySelectorAll("[type='checkbox']:checked");
-    checked.forEach((aChecked) => {
-        checkedAnswer.push(aChecked.value);
-    })
-    let trueCount = checkedAnswer.filter((value) => {
-        return value === "true";
-    })
-
-    if (trueCount.length === 0) {
-        mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
-        mainText.innerText = "Oh, No duck."
-    }
-    else if (trueCount.length === 1) {
-        mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
-        mainText.innerText = "Nice, You found a duck!"
-        addDuck()
-    }
-    else if (trueCount.length === 2) {
-        mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
-        mainText.innerText = "Wow, You found 2 ducks!"
-        addDuck()
-        addDuck()
-    }
-    //正しい回答を青文字に　nextElementSibling
-    let checkBoxes = document.querySelectorAll("input");
-    checkBoxes.forEach((box) => {
-        box.nextElementSibling.style.color = "lightgrey"
-        if (box.value === "true") {
-            box.nextElementSibling.style.color = "blue";
-        }
-    })
-    // NextBtn on, Submit off
-    next.style.display = "block";
-    checkboxSubmit.style.display = "none";
 })

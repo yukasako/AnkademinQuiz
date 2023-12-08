@@ -7,6 +7,19 @@ body{
     font-family: 'Courier New', monospace;
 }
 
+#darkMode{
+    width: 50px;
+}
+#darkMode:hover{
+    width: 70px;
+}
+#lightMode{
+    width: 50px;
+}
+#lightMode:hover{
+    width: 70px;
+}
+
 #mainText{
     text-align: center;
     font-size: 25px;
@@ -45,6 +58,15 @@ button{
 #next{
     margin: 20px;
 }
+
+.background {
+    width: 100vw;
+    height: 30vh;
+    /* background-image: url('./img/grass.png');
+    background-attachment: fixed;
+    background-repeat: repeat-x;
+    background-position: bottom; */
+}  
 
 
 /* @media screen and (max-width: 600px){
