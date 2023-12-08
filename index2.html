@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="https://yukasako.github.io/HamsterQuiz/img/happyHamster.jpeg">
+    <title>Ankademin Quiz Farm</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="main2.js" defer=""></script>
+</head>
+
+<body>
+    <div id="mode">
+        <button id="darkMode">DARK</button>
+        <button id="lightMode">LIGHT</button>
+    </div>
+
+    <h1>Ankademin Quiz Farm</h1>
+    <img src="./img/duck/duck.jpeg" alt="mainImage" id="mainImage">
+    <div id="score"></div>
+    <p id="question">Answer the quiz and find small ducks.</p>
+
+    <div id="quiz">
+        <div id="buttons" style="display: none;">
+            <button id="btn1" name="quiz" value="" style="display: block;">A</button>
+            <button id="btn2" name="quiz" value="" style="display: block;">B</button>
+            <button id="btn3" name="quiz" value="" style="display: block;">C</button>
+            <button id="btn4" name="quiz" value="" style="display: block;">D</button>
+        </div>
+    </div>
+    <div id="checkbox" style="display: none;">
+        <div>
+            <input type="checkbox" id="box1" value="" name="checkbox">
+            <label for="box1" id="labelForBox1">A</label><br>
+            <input type="checkbox" id="box2" value="" name="checkbox">
+            <label for="box2" id="labelForBox2">B</label><br>
+            <input type="checkbox" id="box3" value="" name="checkbox">
+            <label for="box3" id="labelForBox3">C</label><br>
+            <input type="checkbox" id="box4" value="" name="checkbox">
+            <label for="box4" id="labelForBox4">D</label>
+        </div>
+        <button id="checkboxSubmit" name="checkbox">Submit</button>
+    </div>
+    
+    <button id="next">Start Quiz</button>
+    <h2 id="result"></p>
+
+</body>
+
+</html>

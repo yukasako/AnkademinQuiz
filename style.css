@@ -7,7 +7,8 @@ body{
     font-family: 'Courier New', monospace;
 }
 
-#question{
+#mainText{
+    text-align: center;
     font-size: 25px;
 }
 
@@ -18,13 +19,7 @@ body{
 p{
     width: 80vw;
     text-align: center;
-}
-
-#checkbox{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    font-size: 30px;
 }
 
 label{
@@ -47,9 +42,10 @@ button{
     margin: 10px;
 }
 
-button:hover{
-    background-color: lightyellow;
+#next{
+    margin: 20px;
 }
+
 
 /* @media screen and (max-width: 600px){
 } */
