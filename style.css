@@ -1,50 +1,55 @@
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    color : black;
+    color: black;
     font-family: 'Courier New', monospace;
+    margin: 0;
 }
 
-#darkMode{
+#mode{
+    margin-top: 10px;
+}
+#darkMode {
     width: 50px;
 }
-#darkMode:hover{
+#darkMode:hover {
     width: 70px;
 }
-#lightMode{
+#lightMode {
     width: 50px;
 }
-#lightMode:hover{
+#lightMode:hover {
     width: 70px;
 }
 
-#mainText{
+#mainText {
     text-align: center;
     font-size: 25px;
 }
 
-#mainImage{
+#mainImage {
     height: 40vh;
+    margin-bottom: 20px;
 }
 
-p{
+p {
     width: 80vw;
     text-align: center;
     font-size: 30px;
 }
 
-label{
+label {
     font-size: 20px;
 }
 
-#buttons{
+#buttons {
     display: flex;
     flex-direction: column;
 }
 
-button{
+button {
     width: 150px;
     height: 50px;
     border: none;
@@ -55,7 +60,7 @@ button{
     margin: 10px;
 }
 
-#next{
+#next {
     margin: 20px;
 }
 
@@ -66,7 +71,7 @@ button{
     background-attachment: fixed;
     background-repeat: repeat-x;
     background-position: bottom; */
-}  
+}
 
 
 /* @media screen and (max-width: 600px){

@@ -12,49 +12,48 @@ mode(lightModeBtn, "white", "black")
 
 let quiz = [
     //T/F
-    {
-        Q: "Which hamster is the biggest?",
+    {   Type: "button",
+        Q: "Penguins can fly over the sky. \n True or False?",
         Answers: [
-            ["Golden", true],
-            ["Roborovski", false],
+            ["True", false],
+            ["False", true],
         ]
     },
-    {
-        Q: "Which hamster is the biggest?",
+    {   Type: "button",
+        Q: "Ducks can fly a little. \n True or False?",
         Answers: [
-            ["Golden", true],
-            ["Roborovski", false],
+            ["True", true],
+            ["False", false],
         ]
     },
-    // Multipule
-    {
-        Q: "Which hamster is the biggest?",
+    {   Type: "checkbox",
+        Q: "Choose two options. \n Which bird can imitate human words?",
         Answers: [
-            ["Golden", true],
-            ["Roborovski", false],
-            ["Djungarian", false],
-            ["Djungarian", false]
+            ["Cockatiel", true],
+            ["Duck", false],
+            ["Cassowary", false],
+            ["Budgeriga", true]
         ]
     },
-    {
-        Q: "How long is the lifespan of a hamster?",
+    {   Type: "checkbox",
+        Q: "Choose two options. \n Which birds can potentially live more than 40 years?",
         Answers: [
-            ["7 days", false],
-            ["1-3 years", true],
-            ["5-10 years", false],
-            ["5-10 years", false]
+            ["Quail", false],
+            ["Barn Owl", true],
+            ["flamingo", true],
+            ["Canary", false]
         ]
     },
-    {
-        Q: "How long do hamster front teeth grow per week?",
+    {   Type: "button",
+        Q: "What is the typical lifespan of a duck?",
         Answers: [
-            ["1-2 mm", true],
-            ["1-2 cm", false],
-            ["5 cm", false],
-            ["5 cm", false]
+            ["3 years", false],
+            ["8 years", true],
+            ["13 years", false],
+            ["20 years", false]
         ]
     },
-    {
+    {   Type: "button",
         Q: "What color light are hamsters most sensitive to?",
         Answers: [
             ["Red", true],
@@ -63,7 +62,7 @@ let quiz = [
             ["Blue", false]
         ]
     },
-    {
+    {   Type: "button",
         Q: "During which time of day are hamsters most active?",
         Answers: [
             ["Morning", false],
@@ -72,8 +71,7 @@ let quiz = [
             ["Night", true],
         ]
     },
-    // Check Box
-    {
+    {   Type: "checkbox",
         Q: "Choose 2 options. \n \n Which duck is the largest?",
         Answers: [
             ["Mallard", false],
@@ -82,7 +80,7 @@ let quiz = [
             ["Khaki Campbell", false]
         ]
     },
-    {
+    {   Type: "checkbox",
         Q: "Choose 2 options. \n \n What color eggs do most ducks lay?",
         Answers: [
             ["White", true],
@@ -91,7 +89,7 @@ let quiz = [
             ["Green", true]
         ]
     },
-    {
+    {   Type: "checkbox",
         Q: "Choose 2 options. \n \n In what environment do ducks prefer to live?",
         Answers: [
             ["Desert", false],
@@ -102,7 +100,7 @@ let quiz = [
     }
 ];
 
-/*---------------　要素宣言　--------------------*/
+/*---------------　要素宣言　---------------*/
 let mainImage = document.querySelector("#mainImage") //　画像(img)
 let score = document.querySelector("#score") //　スコア置き場(div)
 let mainText = document.querySelector("#mainText") // 質問文表示(p)
@@ -111,7 +109,7 @@ let btnDiv = document.querySelector("#buttons") //　回答ボタンたち置き
 let checkboxSubmit = document.querySelector("#checkboxSubmit") // 提出ボタン
 let next = document.querySelector("#next") // 次へButton（大事）
 
-/*---------------　Function　--------------------*/
+/*---------------　Function　---------------*/
 let addDuck = () => {
     let aDuck = document.createElement("img");
     aDuck.setAttribute('src', "./img/duck/scoreDuck.jpeg");
@@ -119,15 +117,35 @@ let addDuck = () => {
     score.append(aDuck);
 }
 
-/*---------------　Nextボタンでクイズを引用　--------------------*/
+/*---------------　Nextボタンでクイズを引用　---------------*/
 let quizIndex = 0;
 next.addEventListener("click", () => {
     // クイズオープン
     mainImage.setAttribute('src', "./img/duck/duck.jpeg");
     next.style.display = "none";
     btnDiv.innerHTML = "";    //前回の引用内容を消す。
-
-    if (quizIndex <= 6) { //★Button type
+    
+    if (quizIndex >= quiz.length){ //Result（Array内の質問完了）
+        btnDiv.style.display = "none";
+        next.style.display = "block"; //もう一回遊ぶ
+        next.innerText = "Continue finding";
+        quizIndex = 0;
+        // 評価 Max 15
+        if (score.childElementCount >= 11) {
+            mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg")
+            mainText.innerText = `Amazing!\n You found ${score.childElementCount} ducks!`;
+            next.style.display = "none"
+        }
+        else if (score.childElementCount >= 8) {
+            mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
+            mainText.innerText = `Nice!\n You found ${score.childElementCount} ducks!`;
+        }
+        else {
+            mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg")
+            mainText.innerText = `Only ${score.childElementCount} ducks!?\n I need to continue finding ducks.`;
+        }
+    }
+    else if (quiz[quizIndex].Type === "button") { //★Button type
         btnDiv.style.display = "flex";
         //★引用
         mainText.innerText = quiz[quizIndex].Q;
@@ -144,11 +162,11 @@ next.addEventListener("click", () => {
                 if (answerBtn.value === "true") {
                     addDuck();
                     mainText.innerText = "Yay! Correct!";
-                    mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg");
+                    mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg");
                 }
                 else {
-                    mainText.innerText = "Ooops";
-                    mainImage.setAttribute('src', "./img/duck/noDuck.jpeg");
+                    mainText.innerText = "Qwhaaat!?";
+                    mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg");
                     answerBtn.style.textDecoration = "line-through";
                 }
                 // 正解ボタンの色付け
@@ -163,7 +181,7 @@ next.addEventListener("click", () => {
         })
         quizIndex++;
     }
-    else if (quizIndex < quiz.length) { //★Checkbox type
+    else if (quiz[quizIndex].Type === "checkbox") { //★Checkbox type
         //★引用
         mainText.innerText = quiz[quizIndex].Q;
         quiz[quizIndex].Answers.forEach((answer) => {
@@ -201,11 +219,11 @@ next.addEventListener("click", () => {
                 }
             })    
             if (checkedTrue.length === 0) {
-                mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
-                mainText.innerText = "Oh, No duck."
+                mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg")
+                mainText.innerText = "Qwhaaat!?"
             }
             else if (checkedTrue.length === 1) {
-                mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
+                mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg")
                 mainText.innerText = "Nice, You found a duck!"
                 addDuck()
             }
@@ -228,25 +246,5 @@ next.addEventListener("click", () => {
             checkboxSubmit.style.display = "none";
         })
         quizIndex++;
-    }
-    else { //Result（Array内の質問完了）
-        btnDiv.style.display = "none";
-        next.style.display = "block"; //もう一回遊ぶ
-        next.innerText = "Continue finding";
-        quizIndex = 0;
-        // 評価 Max 15
-        if (score.childElementCount >= 11) {
-            mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
-            mainText.innerText = `Amazing!\n You found ${score.childElementCount} ducks!`;
-            next.style.display = "none"
-        }
-        else if (score.childElementCount >= 8) {
-            mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
-            mainText.innerText = `Nice!\n You found ${score.childElementCount} ducks!`;
-        }
-        else {
-            mainImage.setAttribute('src', "./img/duck/noDuck.jpeg")
-            mainText.innerText = `Only ${score.childElementCount} ducks!?\n I need continue finding.`;
-        }
     }
 })
