@@ -13,14 +13,14 @@ mode(lightModeBtn, "white", "black")
 let quiz = [
     //T/F
     {   Type: "button",
-        Q: "Penguins can fly over the sky. \n True or False?",
+        Q: "Some of the ducks can fly a little. \n True or False?",
         Answers: [
-            ["True", false],
-            ["False", true],
+            ["True", true],
+            ["False", false],
         ]
     },
     {   Type: "button",
-        Q: "Ducks can fly a little. \n True or False?",
+        Q: "Ducks can eat frogs. \n True or False?",
         Answers: [
             ["True", true],
             ["False", false],
@@ -53,35 +53,35 @@ let quiz = [
             ["20 years", false]
         ]
     },
-    {   Type: "button",
-        Q: "What color light are hamsters most sensitive to?",
-        Answers: [
-            ["Red", true],
-            ["Blue", false],
-            ["Green", false],
-            ["Blue", false]
-        ]
-    },
-    {   Type: "button",
-        Q: "During which time of day are hamsters most active?",
-        Answers: [
-            ["Morning", false],
-            ["Afternoon", false],
-            ["Night", true],
-            ["Night", true],
-        ]
-    },
     {   Type: "checkbox",
-        Q: "Choose 2 options. \n \n Which duck is the largest?",
+        Q: "Choose two options. \n Which character is modeled after a duck?",
+        Answers: [
+            ["Chocobo of Final Fantacy", false],
+            ["Kodak of Pokemon", true],
+            ["Tweety of Looney Tunes", false],
+            ["Donald Duck of Disney", true]
+        ]
+    },
+    {   Type: "button",
+        Q: "What is a group of ducks called?",
+        Answers: [
+            ["Herd", false],
+            ["Pod", false],
+            ["Flock", true],
+            ["Quack", false],
+        ]
+    },
+    {   Type: "button",
+        Q: "Which duck is the largest?",
         Answers: [
             ["Mallard", false],
-            ["Pekin", true],
+            ["Pekin", false],
             ["Muscovy", true],
             ["Khaki Campbell", false]
         ]
     },
     {   Type: "checkbox",
-        Q: "Choose 2 options. \n \n What color eggs do most ducks lay?",
+        Q: "Choose 2 options. \nWhat color eggs do most ducks lay?",
         Answers: [
             ["White", true],
             ["Brown", false],
@@ -90,7 +90,7 @@ let quiz = [
         ]
     },
     {   Type: "checkbox",
-        Q: "Choose 2 options. \n \n In what environment do ducks prefer to live?",
+        Q: "Choose 2 options. \n In what environment do ducks prefer to live?",
         Answers: [
             ["Desert", false],
             ["Forest", false],
@@ -210,8 +210,8 @@ next.addEventListener("click", () => {
         })
         // ★チェックボックスSubmitで回答を提出。チェックしたもののValueがTrueだったらArrayに追加してその長さで判断。
         checkboxSubmit.style.display = "block";
+        let checkedTrue = [];
         checkboxSubmit.addEventListener("click", () => {
-            let checkedTrue = [];
             let checked = document.querySelectorAll("[type='checkbox']:checked");
             checked.forEach((aChecked) => {
                 if (aChecked.value === "true") {
@@ -233,6 +233,7 @@ next.addEventListener("click", () => {
                 addDuck()
                 addDuck()
             }
+            console.log(checkedTrue)
             //正しい回答を青文字に　nextElementSibling
             let checkBoxes = document.querySelectorAll("input");
             checkBoxes.forEach((box) => {
@@ -245,6 +246,7 @@ next.addEventListener("click", () => {
             next.style.display = "block";
             checkboxSubmit.style.display = "none";
         })
+        checkedTrue.length = 0; //空にする
         quizIndex++;
     }
 })
