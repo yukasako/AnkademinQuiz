@@ -104,7 +104,6 @@ let quiz = [
 let mainImage = document.querySelector("#mainImage") //　画像(img)
 let score = document.querySelector("#score") //　スコア置き場(div)
 let mainText = document.querySelector("#mainText") // 質問文表示(p)
-let result = document.querySelector("#result") // result
 let btnDiv = document.querySelector("#buttons") //　回答ボタンたち置き場
 let next = document.querySelector("#next") // 次へButton（大事）
 
@@ -123,6 +122,7 @@ next.addEventListener("click", () => {
     mainImage.setAttribute('src', "./img/duck/duck.jpeg");
     next.style.display = "none";
     btnDiv.innerHTML = "";    //前回の引用内容を消す。
+    mainText.style.backgroundColor = "none";
     
     if (quizIndex >= quiz.length){ //Result（Array内の質問完了）
         btnDiv.style.display = "none";
@@ -131,16 +131,19 @@ next.addEventListener("click", () => {
         quizIndex = 0;
         // 評価 Max 15
         if (score.childElementCount >= 11) {
-            mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg")
+            mainText.style.backgroundColor = "lightgreen";
+            mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg");
             mainText.innerText = `Amazing!\n You found ${score.childElementCount} ducks!`;
-            next.style.display = "none"
+            // next.style.display = "none"
         }
         else if (score.childElementCount >= 8) {
-            mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
+            mainText.style.backgroundColor = "lightyellow";
+            mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg");
             mainText.innerText = `Nice!\n You found ${score.childElementCount} ducks!`;
         }
         else {
-            mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg")
+            mainText.style.backgroundColor = "lightpink";
+            mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg");
             mainText.innerText = `Only ${score.childElementCount} ducks!?\n I need to continue finding ducks.`;
         }
     }
@@ -195,10 +198,6 @@ next.addEventListener("click", () => {
             checkboxDiv.append(checkbox, label);
             btnDiv.append(checkboxDiv);
         })
-         // 提出ボタン
-        let checkboxSubmit = document.createElement("button")
-        checkboxSubmit.innerText = "Submit"
-        btnDiv.append(checkboxSubmit);
         //チェックボックスの個数制限。ボックスがチェック（チェンジ）される度にチェック数（length）を取得しcheckMaxと比較。超えていたらチェックできなくする。
         let checkMax = 2;
         let checkBoxes = document.querySelectorAll("[type='checkbox']");
@@ -210,9 +209,12 @@ next.addEventListener("click", () => {
                 }
             })
         })
-        // ★チェックボックスSubmitで回答を提出。チェックしたもののValueがTrueだったらArrayに追加してその長さで判断。
+        // 提出ボタン
+       let checkboxSubmit = document.createElement("button")
+       checkboxSubmit.innerText = "Submit"
+       next.parentNode.insertBefore(checkboxSubmit, next);
+       // ★チェックボックスSubmitで回答を提出。チェックしたもののValueがTrueだったらArrayに追加してその長さで判断。
         let checkedTrue = [];
-        checkboxSubmit.style.display = "block";
         checkboxSubmit.addEventListener("click", () => {
             let checked = document.querySelectorAll("[type='checkbox']:checked");
             checked.forEach((aChecked) => {
@@ -225,7 +227,7 @@ next.addEventListener("click", () => {
                 mainText.innerText = "Qwhaaat!?"
             }
             else if (checkedTrue.length === 1) {
-                mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg")
+                mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
                 mainText.innerText = "Nice, You found a duck!"
                 addDuck()
             }
@@ -247,7 +249,6 @@ next.addEventListener("click", () => {
             next.style.display = "block";
             checkboxSubmit.style.display = "none";
         })
-        // checkedTrue.length = 0; //空にする。スコープの外じゃないとダブるのでここ。なぜ？
         quizIndex++;
     }
 })
