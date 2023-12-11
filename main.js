@@ -40,7 +40,7 @@ let quiz = [
         Answers: [
             ["Quail", false],
             ["Barn Owl", true],
-            ["flamingo", true],
+            ["Flamingo", true],
             ["Canary", false]
         ]
     },
@@ -106,7 +106,6 @@ let score = document.querySelector("#score") //　スコア置き場(div)
 let mainText = document.querySelector("#mainText") // 質問文表示(p)
 let result = document.querySelector("#result") // result
 let btnDiv = document.querySelector("#buttons") //　回答ボタンたち置き場
-let checkboxSubmit = document.querySelector("#checkboxSubmit") // 提出ボタン
 let next = document.querySelector("#next") // 次へButton（大事）
 
 /*---------------　Function　---------------*/
@@ -182,7 +181,7 @@ next.addEventListener("click", () => {
         quizIndex++;
     }
     else if (quiz[quizIndex].Type === "checkbox") { //★Checkbox type
-        //★引用
+        //★引用。クイズボタン作成
         mainText.innerText = quiz[quizIndex].Q;
         quiz[quizIndex].Answers.forEach((answer) => {
             let checkboxDiv = document.createElement("div")
@@ -193,10 +192,13 @@ next.addEventListener("click", () => {
             let label = document.createElement("label");
             label.innerText = answer[0];
             label.setAttribute(`for`, answer[0]);
-            checkboxDiv.append(checkbox);
-            checkboxDiv.append(label);
+            checkboxDiv.append(checkbox, label);
             btnDiv.append(checkboxDiv);
         })
+         // 提出ボタン
+        let checkboxSubmit = document.createElement("button")
+        checkboxSubmit.innerText = "Submit"
+        btnDiv.append(checkboxSubmit);
         //チェックボックスの個数制限。ボックスがチェック（チェンジ）される度にチェック数（length）を取得しcheckMaxと比較。超えていたらチェックできなくする。
         let checkMax = 2;
         let checkBoxes = document.querySelectorAll("[type='checkbox']");
@@ -209,8 +211,8 @@ next.addEventListener("click", () => {
             })
         })
         // ★チェックボックスSubmitで回答を提出。チェックしたもののValueがTrueだったらArrayに追加してその長さで判断。
-        checkboxSubmit.style.display = "block";
         let checkedTrue = [];
+        checkboxSubmit.style.display = "block";
         checkboxSubmit.addEventListener("click", () => {
             let checked = document.querySelectorAll("[type='checkbox']:checked");
             checked.forEach((aChecked) => {
@@ -233,7 +235,6 @@ next.addEventListener("click", () => {
                 addDuck()
                 addDuck()
             }
-            console.log(checkedTrue)
             //正しい回答を青文字に　nextElementSibling
             let checkBoxes = document.querySelectorAll("input");
             checkBoxes.forEach((box) => {
@@ -246,7 +247,7 @@ next.addEventListener("click", () => {
             next.style.display = "block";
             checkboxSubmit.style.display = "none";
         })
-        checkedTrue.length = 0; //空にする
+        // checkedTrue.length = 0; //空にする。スコープの外じゃないとダブるのでここ。なぜ？
         quizIndex++;
     }
 })
