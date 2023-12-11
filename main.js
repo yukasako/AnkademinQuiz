@@ -106,6 +106,7 @@ let score = document.querySelector("#score") //　スコア置き場(div)
 let mainText = document.querySelector("#mainText") // 質問文表示(p)
 let btnDiv = document.querySelector("#buttons") //　回答ボタンたち置き場
 let next = document.querySelector("#next") // 次へButton（大事）
+let confetti = document.querySelector("#confetti");
 
 /*---------------　Function　---------------*/
 let addDuck = () => {
@@ -115,6 +116,12 @@ let addDuck = () => {
     score.append(aDuck);
 }
 
+let addConfetti = (color) =>{
+    confetti.style.display = "block";
+    confetti.firstElementChild.setAttribute("src", `./img/confetti/${color}Left.jpeg`);
+    confetti.lastElementChild.setAttribute("src", `./img/confetti/${color}Right.jpeg`);
+}
+
 /*---------------　Nextボタンでクイズを引用　---------------*/
 let quizIndex = 0;
 next.addEventListener("click", () => {
@@ -122,7 +129,6 @@ next.addEventListener("click", () => {
     mainImage.setAttribute('src', "./img/duck/duck.jpeg");
     next.style.display = "none";
     btnDiv.innerHTML = "";    //前回の引用内容を消す。
-    mainText.style.backgroundColor = "none";
     
     if (quizIndex >= quiz.length){ //Result（Array内の質問完了）
         btnDiv.style.display = "none";
@@ -131,18 +137,17 @@ next.addEventListener("click", () => {
         quizIndex = 0;
         // 評価 Max 15
         if (score.childElementCount >= 11) {
-            mainText.style.backgroundColor = "lightgreen";
             mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg");
             mainText.innerText = `Amazing!\n You found ${score.childElementCount} ducks!`;
-            // next.style.display = "none"
+            addConfetti(`green`)
         }
         else if (score.childElementCount >= 8) {
-            mainText.style.backgroundColor = "lightyellow";
             mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg");
             mainText.innerText = `Nice!\n You found ${score.childElementCount} ducks!`;
+            addConfetti(`orange`)
         }
         else {
-            mainText.style.backgroundColor = "lightpink";
+            mainImage.style.backgroundColor = "lightpink";
             mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg");
             mainText.innerText = `Only ${score.childElementCount} ducks!?\n I need to continue finding ducks.`;
         }
