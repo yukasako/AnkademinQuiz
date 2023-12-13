@@ -21,7 +21,7 @@ let quiz = [
     },
     {
         Type: "button",
-        Q: "What the phenomenon in the previous question is called?",
+        Q: "What is the phenomenon in the previous question called?",
         Answers: [
             ["Ducking", false],
             ["Imprinting", true],
@@ -41,7 +41,7 @@ let quiz = [
     },
     {
         Type: "button",
-        Q: "Ducks often sleep by standing on one leg.",
+        Q: "Ducks often sleep by standing on one leg.\n True or False?",
         Answers: [
             ["True", true],
             ["False", false]
@@ -71,10 +71,10 @@ let quiz = [
         Type: "checkbox",
         Q: "Choose two options. \n Which character is modeled after a duck?",
         Answers: [
-            ["Chocobo of Final Fantacy", false],
-            ["Donald Duck of Disney", true],
-            ["Tweety of Looney Tunes", false],
-            ["Farfetch'd of Pokemon", true],
+            ["Chocobo from Final Fantacy", false],
+            ["Donald Duck from Disney", true],
+            ["Tweety from Looney Tunes", false],
+            ["Farfetch'd from Pokemon", true],
         ]
     },
     {
@@ -102,9 +102,9 @@ let quiz = [
         Q: "Choose 2 options. \n In Japan, ducks are often raised in rice paddies. Because... ",
         Answers: [
             ["They are believed as the god of agriculture.", false],
-            ["They are cute and good for landscape.", false],
+            ["They are cute and good for the landscape.", false],
             ["They eat weeds and pests.", true],
-            ["They mix the mud and promotes the rice growth.", true],
+            ["They mix the mud and promote rice growth.", true],
         ]
     }
 ];
