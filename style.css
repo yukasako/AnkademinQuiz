@@ -10,8 +10,6 @@ body {
 
 #mode{
     margin-top: 10px;
-    position: absolute;
-    right: 0;
 }
 #darkMode {
     width: 50px;
