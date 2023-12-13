@@ -7,44 +7,58 @@ let mode = (btn, backgroundColor, fontColor) => {
         document.body.style.color = fontColor;
     })
 }
-mode(darkModeBtn, "black", "white")
+mode(darkModeBtn, "#121212", "white")
 mode(lightModeBtn, "white", "black")
 
 let quiz = [
-    //T/F
-    {   Type: "button",
-        Q: "Some of the ducks can fly a little. \n True or False?",
+    {
+        Type: "button",
+        Q: "Ducks recognize the first thing they see after hatching as their parents. \n True or False?",
         Answers: [
             ["True", true],
             ["False", false],
         ]
     },
-    {   Type: "button",
-        Q: "Ducks can eat frogs. \n True or False?",
+    {
+        Type: "button",
+        Q: "What the phenomenon in the previous question is called?",
         Answers: [
-            ["True", true],
-            ["False", false],
+            ["Ducking", false],
+            ["Imprinting", true],
+            ["Installing", false],
+            ["Mimicking", false],
         ]
     },
-    {   Type: "checkbox",
+    {
+        Type: "checkbox",
         Q: "Choose two options. \n Which bird can imitate human words?",
         Answers: [
-            ["Cockatiel", true],
             ["Duck", false],
+            ["Cockatiel", true],
             ["Cassowary", false],
-            ["Budgeriga", true]
+            ["Budgerigar", true]
         ]
     },
-    {   Type: "checkbox",
+    {
+        Type: "button",
+        Q: "Ducks often sleep by standing on one leg.",
+        Answers: [
+            ["True", true],
+            ["False", false]
+        ]
+    },
+    {
+        Type: "checkbox",
         Q: "Choose two options. \n Which birds can potentially live more than 40 years?",
         Answers: [
+            ["Duck", false],
             ["Quail", false],
             ["Barn Owl", true],
-            ["Flamingo", true],
-            ["Canary", false]
+            ["Flamingo", true]
         ]
     },
-    {   Type: "button",
+    {
+        Type: "button",
         Q: "What is the typical lifespan of a duck?",
         Answers: [
             ["3 years", false],
@@ -53,16 +67,18 @@ let quiz = [
             ["20 years", false]
         ]
     },
-    {   Type: "checkbox",
+    {
+        Type: "checkbox",
         Q: "Choose two options. \n Which character is modeled after a duck?",
         Answers: [
             ["Chocobo of Final Fantacy", false],
-            ["Kodak of Pokemon", true],
+            ["Donald Duck of Disney", true],
             ["Tweety of Looney Tunes", false],
-            ["Donald Duck of Disney", true]
+            ["Farfetch'd of Pokemon", true],
         ]
     },
-    {   Type: "button",
+    {
+        Type: "button",
         Q: "What is a group of ducks called?",
         Answers: [
             ["Herd", false],
@@ -71,7 +87,8 @@ let quiz = [
             ["Quack", false],
         ]
     },
-    {   Type: "button",
+    {
+        Type: "button",
         Q: "Which duck is the largest?",
         Answers: [
             ["Mallard", false],
@@ -80,22 +97,14 @@ let quiz = [
             ["Khaki Campbell", false]
         ]
     },
-    {   Type: "checkbox",
-        Q: "Choose 2 options. \nWhat color eggs do most ducks lay?",
+    {
+        Type: "checkbox",
+        Q: "Choose 2 options. \n In Japan, ducks are often raised in rice paddies. Because... ",
         Answers: [
-            ["White", true],
-            ["Brown", false],
-            ["Blue", false],
-            ["Green", true]
-        ]
-    },
-    {   Type: "checkbox",
-        Q: "Choose 2 options. \n In what environment do ducks prefer to live?",
-        Answers: [
-            ["Desert", false],
-            ["Forest", false],
-            ["Swamp", true],
-            ["Mountains", true]
+            ["They are believed as the god of agriculture.", false],
+            ["They are cute and good for landscape.", false],
+            ["They eat weeds and pests.", true],
+            ["They mix the mud and promotes the rice growth.", true],
         ]
     }
 ];
@@ -116,7 +125,7 @@ let addDuck = () => {
     score.append(aDuck);
 }
 
-let addConfetti = (color) =>{
+let addConfetti = (color) => {
     confetti.style.display = "block";
     confetti.firstElementChild.setAttribute("src", `./img/confetti/${color}Left.jpeg`);
     confetti.lastElementChild.setAttribute("src", `./img/confetti/${color}Right.jpeg`);
@@ -129,27 +138,26 @@ next.addEventListener("click", () => {
     mainImage.setAttribute('src', "./img/duck/duck.jpeg");
     next.style.display = "none";
     btnDiv.innerHTML = "";    //前回の引用内容を消す。
-    
-    if (quizIndex >= quiz.length){ //Result（Array内の質問完了）
+
+    if (quizIndex >= quiz.length) { //Result（Array内の質問完了）
         btnDiv.style.display = "none";
-        next.style.display = "block"; //もう一回遊ぶ
         next.innerText = "Continue finding";
         quizIndex = 0;
-        // 評価 Max 15
-        if (score.childElementCount >= 11) {
+        // 評価 Max 14
+        if (score.childElementCount >= 14 * 0.75) {
             mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg");
             mainText.innerText = `Amazing!\n You found ${score.childElementCount} ducks!`;
             addConfetti(`green`)
         }
-        else if (score.childElementCount >= 8) {
+        else if (score.childElementCount >= 14 * 0.5) {
             mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg");
             mainText.innerText = `Nice!\n You found ${score.childElementCount} ducks!`;
             addConfetti(`orange`)
         }
         else {
-            mainImage.style.backgroundColor = "lightpink";
-            mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg");
-            mainText.innerText = `Only ${score.childElementCount} ducks!?\n I need to continue finding ducks.`;
+            mainImage.setAttribute('src', "./img/duck/sadRedDuck.jpeg");
+            mainText.innerText = `Only ${score.childElementCount} ducks!?\n You need to continue finding ducks.`;
+            next.style.display = "block"; //もう一回遊ぶ
         }
     }
     else if (quiz[quizIndex].Type === "button") { //★Button type
@@ -215,10 +223,10 @@ next.addEventListener("click", () => {
             })
         })
         // 提出ボタン
-       let checkboxSubmit = document.createElement("button")
-       checkboxSubmit.innerText = "Submit"
-       next.parentNode.insertBefore(checkboxSubmit, next);
-       // ★チェックボックスSubmitで回答を提出。チェックしたもののValueがTrueだったらArrayに追加してその長さで判断。
+        let checkboxSubmit = document.createElement("button")
+        checkboxSubmit.innerText = "Submit"
+        next.parentNode.insertBefore(checkboxSubmit, next);
+        // ★チェックボックスSubmitで回答を提出。チェックしたもののValueがTrueだったらArrayに追加してその長さで判断。
         let checkedTrue = [];
         checkboxSubmit.addEventListener("click", () => {
             let checked = document.querySelectorAll("[type='checkbox']:checked");
@@ -226,7 +234,7 @@ next.addEventListener("click", () => {
                 if (aChecked.value === "true") {
                     checkedTrue.push(aChecked);
                 }
-            })    
+            })
             if (checkedTrue.length === 0) {
                 mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg")
                 mainText.innerText = "Qwhaaat!?"
