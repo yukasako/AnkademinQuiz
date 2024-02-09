@@ -120,22 +120,22 @@ let confetti = document.querySelector("#confetti");
 /*---------------　Function　---------------*/
 let addDuck = () => {
     let aDuck = document.createElement("img");
-    aDuck.setAttribute('src', "./img/duck/scoreDuck.jpeg");
+    aDuck.setAttribute('src', "./img/duck/scoreDuck.webp");
     aDuck.style.width = "50px";
     score.append(aDuck);
 }
 
 let addConfetti = (color) => {
     confetti.style.display = "block";
-    confetti.firstElementChild.setAttribute("src", `./img/confetti/${color}Left.jpeg`);
-    confetti.lastElementChild.setAttribute("src", `./img/confetti/${color}Right.jpeg`);
+    confetti.firstElementChild.setAttribute("src", `./img/confetti/${color}Left.webp`);
+    confetti.lastElementChild.setAttribute("src", `./img/confetti/${color}Right.webp`);
 }
 
 /*---------------　Nextボタンでクイズを引用　---------------*/
 let quizIndex = 0;
 next.addEventListener("click", () => {
     // クイズオープン
-    mainImage.setAttribute('src', "./img/duck/duck.jpeg");
+    mainImage.setAttribute('src', "./img/duck/duck.webp");
     next.style.display = "none";
     btnDiv.innerHTML = "";    //前回の引用内容を消す。
 
@@ -145,17 +145,17 @@ next.addEventListener("click", () => {
         quizIndex = 0;
         // 評価 Max 14
         if (score.childElementCount >= 14 * 0.75) {
-            mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg");
+            mainImage.setAttribute('src', "./img/duck/happyDuck.webp");
             mainText.innerText = `Amazing!\n You found ${score.childElementCount} ducks!`;
             addConfetti(`green`)
         }
         else if (score.childElementCount >= 14 * 0.5) {
-            mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg");
+            mainImage.setAttribute('src', "./img/duck/twoDucks.webp");
             mainText.innerText = `Nice!\n You found ${score.childElementCount} ducks!`;
             addConfetti(`orange`)
         }
         else {
-            mainImage.setAttribute('src', "./img/duck/sadRedDuck.jpeg");
+            mainImage.setAttribute('src', "./img/duck/sadRedDuck.webp");
             mainText.innerText = `Only ${score.childElementCount} ducks!?\n You need to continue finding ducks.`;
             next.style.display = "block"; //もう一回遊ぶ
         }
@@ -177,11 +177,11 @@ next.addEventListener("click", () => {
                 if (answerBtn.value === "true") {
                     addDuck();
                     mainText.innerText = "Yay! Correct!";
-                    mainImage.setAttribute('src', "./img/duck/happyDuck.jpeg");
+                    mainImage.setAttribute('src', "./img/duck/happyDuck.webp");
                 }
                 else {
                     mainText.innerText = "Qwhaaat!?";
-                    mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg");
+                    mainImage.setAttribute('src', "./img/duck/sadDuck.webp");
                     answerBtn.style.textDecoration = "line-through";
                 }
                 // 正解ボタンの色付け
@@ -236,16 +236,16 @@ next.addEventListener("click", () => {
                 }
             })
             if (checkedTrue.length === 0) {
-                mainImage.setAttribute('src', "./img/duck/sadDuck.jpeg")
+                mainImage.setAttribute('src', "./img/duck/sadDuck.webp")
                 mainText.innerText = "Qwhaaat!?"
             }
             else if (checkedTrue.length === 1) {
-                mainImage.setAttribute('src', "./img/duck/oneDuck.jpeg")
+                mainImage.setAttribute('src', "./img/duck/oneDuck.webp")
                 mainText.innerText = "Nice, You found a duck!"
                 addDuck()
             }
             else if (checkedTrue.length === 2) {
-                mainImage.setAttribute('src', "./img/duck/twoDucks.jpeg")
+                mainImage.setAttribute('src', "./img/duck/twoDucks.webp")
                 mainText.innerText = "Wow, You found 2 ducks!"
                 addDuck()
                 addDuck()
